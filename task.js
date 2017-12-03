@@ -1,3 +1,16 @@
+function getDuplicates(list) {
+    const duplicates = {};
+    for (let i = 0; i < list.length; i++) {
+        if (duplicates.hasOwnProperty(list[i])) {
+            duplicates[list[i]].push(i);
+        } else if (list.lastIndexOf(list[i]) !== i) {
+            duplicates[list[i]] = [i];
+        }
+    }
+
+    return duplicates;
+}
+
 /**
  * Получения двумерный массив анаграмм из произвольного массива слов
  * @param   {string[]} list
@@ -15,8 +28,9 @@ function getAnagrams(list) {
     // const result = [];
 
 
-    return sortedList;
+    return getDuplicates(sortedList);
 }
+
 
 /*[ 'кот',
     'аилп',
@@ -27,7 +41,6 @@ function getAnagrams(list) {
     'аилп',
     'абккоор',
     'опст' ]*/
-
 
 const inputList = [
     'кот', 'пила', 'барокко',
