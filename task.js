@@ -4,16 +4,15 @@
  * @returns {Array<[string, string]>}
  */
 function getAnagrams(list) {
-    const anagrams = {};
-
-    list.forEach(word => {
+    const anagrams = list.reduce((dictionary, word) => {
         const sorted = word.split('').sort().join('');
-        if (anagrams[sorted] != null) {
-            anagrams[sorted].push(word);
+        if (dictionary[sorted] != null) {
+            dictionary[sorted].push(word);
         } else {
-            anagrams[sorted] = [word];
+            dictionary[sorted] = [word];
         }
-    });
+        return dictionary;
+    }, {});
 
     const result = Object.values(anagrams);
 
