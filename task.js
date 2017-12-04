@@ -1,14 +1,34 @@
-function getDuplicates(list) {
-    const duplicates = {};
+/**
+ * Внутренняя сортировка каждого элемента списка
+ * @param {string[]} list
+ * @returns {string[]}
+ */
+function innerSort(list) {
+    const result = [];
+    list.forEach((value, index) => {
+        // разбить строку на буквы, отсортировать и слить обратно
+        const sorted = list[index].split('').sort().join('');
+        result.push(sorted);
+    });
+
+    return result;
+}
+
+/**
+ * Поиск индексов дубликатов в списке
+ * @param {string[]} list
+ * @returns {Array<[int, int]>}
+ */
+function getDuplicatesIndex(list) {
+    const result = {};
     for (let i = 0; i < list.length; i++) {
-        if (duplicates.hasOwnProperty(list[i])) {
-            duplicates[list[i]].push(i);
+        if (result.hasOwnProperty(list[i])) {
+            result[list[i]].push(i);
         } else if (list.lastIndexOf(list[i]) !== i) {
-            duplicates[list[i]] = [i];
+            result[list[i]] = [i];
         }
     }
-
-    return duplicates;
+    return Object.values(result);
 }
 
 /**
@@ -17,30 +37,19 @@ function getDuplicates(list) {
  * @returns {Array<[string, string]>}
  */
 function getAnagrams(list) {
-    const sortedList = [];
+    const result = [];
 
-    list.forEach((value, index) => {
-        // разбить строку на буквы, отсортировать и слить обратно
-        const sorted = list[index].split('').sort().join('');
-        sortedList.push(sorted);
+    const innerSortedList = innerSort(list);
+    const duplicatesIndex = getDuplicatesIndex(innerSortedList);
+
+    duplicatesIndex.forEach(array => {
+        const resultSubArray = [];
+        array.forEach(index => resultSubArray.push(list[index]));
+        result.push(resultSubArray);
     });
 
-    // const result = [];
-
-
-    return getDuplicates(sortedList);
+    return result;
 }
-
-
-/*[ 'кот',
-    'аилп',
-    'абккоор',
-    'опст',
-    'кот',
-    'аккош',
-    'аилп',
-    'абккоор',
-    'опст' ]*/
 
 const inputList = [
     'кот', 'пила', 'барокко',
