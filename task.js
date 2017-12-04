@@ -6,18 +6,18 @@
 function getAnagrams(list) {
     const anagrams = {};
 
-    list.forEach(value => {
-        const sorted = value.split('').sort().join('');
+    list.forEach(word => {
+        const sorted = word.split('').sort().join('');
         if (anagrams[sorted] != null) {
-            anagrams[sorted].push(value);
+            anagrams[sorted].push(word);
         } else {
-            anagrams[sorted] = [value];
+            anagrams[sorted] = [word];
         }
     });
 
     const result = Object.values(anagrams);
 
-    return result.filter(value => value.length > 1);
+    return result.filter(subArray => subArray.length > 1);
 }
 
 const inputList = [
